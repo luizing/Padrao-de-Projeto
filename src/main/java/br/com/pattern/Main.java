@@ -1,6 +1,7 @@
 package br.com.pattern;
 
 import br.com.pattern.ContextStrategy.PaymentContext;
+import br.com.pattern.Decorators.ProcessingFeeDecorator;
 import br.com.pattern.InterfaceStrategy.PaymentStrategy;
 import br.com.pattern.bsinessFactory.PaymentFactory;
 
@@ -19,5 +20,14 @@ public class Main {
 
         PaymentContext context2 = new PaymentContext(payPalPayment);
         context2.executePayment(200.75);
+
+        // Usando Decorator para modificar os pagamentos
+        PaymentStrategy debitCardPayment = PaymentFactory.createPayment("debitcard", "1234-5678-9012-3456", "João Silva");
+        PaymentStrategy paymentWithFee = new ProcessingFeeDecorator(debitCardPayment, -2.5); // 2.5% de taxa
+
+        PaymentContext context3 = new PaymentContext(paymentWithFee);
+        context3.executePayment(100.50); // Pagamento com taxa
+
+        
     }
 }
