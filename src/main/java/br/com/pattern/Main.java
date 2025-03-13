@@ -4,7 +4,10 @@ import br.com.pattern.ContextStrategy.PaymentContext;
 import br.com.pattern.Decorators.ProcessingFeeDecorator;
 import br.com.pattern.InterfaceStrategy.PaymentStrategy;
 import br.com.pattern.LoggerSingleton.PaymentLogger;
+import br.com.pattern.SistemaExterno.BitcoinPayment;
+import br.com.pattern.SistemaExterno.BitcoinPaymentGateway;
 import br.com.pattern.bsinessFactory.PaymentFactory;
+import br.com.pattern.bussinesAdapter.BitcoinPaymentAdapter;
 
 public class Main {
     public static void main(String[] args) {
@@ -28,6 +31,13 @@ public class Main {
 
         PaymentContext context3 = new PaymentContext(paymentWithFee);
         context3.executePayment(100.50); // Pagamento com taxa
+
+        // Usando Adapter para um exemplo de sistema externo usando Bitcoin
+        BitcoinPayment bitcoinPayment = new BitcoinPaymentGateway();
+        PaymentStrategy bitcoinAdapter = new BitcoinPaymentAdapter(bitcoinPayment, "1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa");
+
+        PaymentContext context4 = new PaymentContext(bitcoinAdapter);
+        context4.executePayment(0.005); // Pagamento de 0.005 BTC
 
         // Usando o Logger criado com singleton
         System.out.println("Log de pagamentos:");

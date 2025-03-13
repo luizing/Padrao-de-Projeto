@@ -7,3 +7,4 @@ package br.com.pattern.SistemaExterno;
 public interface BitcoinPayment {
     void payInBitcoin(double amount, String walletAddress);
 }
+
