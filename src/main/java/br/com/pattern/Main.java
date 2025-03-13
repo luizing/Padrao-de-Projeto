@@ -3,6 +3,7 @@ package br.com.pattern;
 import br.com.pattern.ContextStrategy.PaymentContext;
 import br.com.pattern.Decorators.ProcessingFeeDecorator;
 import br.com.pattern.InterfaceStrategy.PaymentStrategy;
+import br.com.pattern.LoggerSingleton.PaymentLogger;
 import br.com.pattern.bsinessFactory.PaymentFactory;
 
 public class Main {
@@ -28,6 +29,8 @@ public class Main {
         PaymentContext context3 = new PaymentContext(paymentWithFee);
         context3.executePayment(100.50); // Pagamento com taxa
 
-        
+        // Usando o Logger criado com singleton
+        System.out.println("Log de pagamentos:");
+        System.out.println(PaymentLogger.getInstance().getLog());
     }
 }
